@@ -5,7 +5,7 @@ import {ShopContext} from '../../Context/ShopContext'
 import remove_icon from '../../Assets/Frontend_Assets/cart_cross_icon.png'
 
 const CartItems = () => {
-    const {all_product, cartItems, removeFromCart} = useContext(ShopContext);
+    const {getTotalCartAmount, all_product, cartItems, removeFromCart} = useContext(ShopContext);
     return (
         <div className='cartitems'>
             <div className="cartitems_format_main">
@@ -18,15 +18,6 @@ const CartItems = () => {
             </div>
             <hr />
             <div>
-                <div className='cartitems_format'>
-                    <img src="" alt="" className='carticon_product_icon'/>
-                    <p></p>
-                    <p></p>
-                    <button className='cartitems_quantity'></button>
-                    <p></p>
-                    <img src="" alt="" onClick={()=>{removeFromCart()}}/>
-                </div>
-                <hr /> 
                 {all_product.map((e)=>{
                     if(cartItems[e.id]>0){
                         return <div>
@@ -35,13 +26,43 @@ const CartItems = () => {
                                 <p>{e.name}</p>
                                 <p>₹{e.new_price}</p>
                                 <button className='cartitems_quantity'>{cartItems[e.id]}</button>
-                                <p>{e.new_price*cartItems[e.id]}</p>
-                                <img src={remove_icon} alt="" onClick={()=>{removeFromCart(e.id)}}/>
+                                <p>₹{e.new_price*cartItems[e.id]}</p>
+                                <img className = "cart_items_remove_icon" src={remove_icon} alt="" onClick={()=>{removeFromCart(e.id)}}/>
                             </div>
                         </div>
                     }
+                    return null;
                 })}
-            </div>
+                <div className='carttems_down'>
+                    <div className="cart_items_total">
+                        <h1>cart Totals</h1>
+                        <div>
+                            <div className="cartitems_total_item">
+                                <p>Subtotal</p>
+                                <p>₹{getTotalCartAmount()}</p>
+                            </div>
+                            <hr />
+                            <div className="cartitems_total_item">
+                                <p>Shipping Fee</p>
+                                <p>Free</p>
+                            </div>
+                            <hr />
+                            <div className='cartitems_total_item'>
+                                <h3>Total</h3>
+                                <h3>₹{getTotalCartAmount()}</h3>
+                            </div>
+                            <button>PROCEED TO CHECKOUT</button>
+                        </div>
+                    </div>
+                    <div className="cart_item_promocode">
+                        <p>If you have a promo code, Enter it here</p>
+                        <div className="cart_item_promobox">
+                            <input type="text" placeholder='Promocode' />
+                            <button>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>    
         </div>
     )
 }
