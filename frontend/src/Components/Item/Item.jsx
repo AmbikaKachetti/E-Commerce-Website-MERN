@@ -11,7 +11,7 @@ const Item = ({ id, image, name, new_price, old_price }) => {
       <p className='item_name'>{name}</p>
       <div className='item_prices'>
         <div className='item_price_new'>₹{new_price}</div>
-        <div className='item_old_price'><del> ₹{old_price}</del></div>
+        <div className='item_old_price'><del>₹{old_price}</del></div>
       </div>
     </div>
   );
