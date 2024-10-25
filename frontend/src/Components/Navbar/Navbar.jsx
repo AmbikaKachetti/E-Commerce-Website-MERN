@@ -10,6 +10,9 @@ const Navbar = () => {
     const [menu, setMenu] = useState("shop");
     const {getTotalCartItems} = useContext(ShopContext);
     const menuRef = useRef();
+
+    console.log(object)
+
     return (
         <div className='navbar'>
             <div className='nav_logo'>
