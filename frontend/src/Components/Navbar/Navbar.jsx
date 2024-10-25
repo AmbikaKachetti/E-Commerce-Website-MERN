@@ -11,7 +11,7 @@ const Navbar = () => {
     const {getTotalCartItems} = useContext(ShopContext);
     const menuRef = useRef();
 
-    console.log(object)
+    console.log(useRef)
 
     return (
         <div className='navbar'>
