@@ -71,4 +71,12 @@
     background-color: red;
     color: white;
 }
-
+/* 800px */
+@media(max-width:800px){
+    .navbar{
+        padding: 10px 0px;
+    }
+    .nav_drop_down{
+        
+    }
+}
