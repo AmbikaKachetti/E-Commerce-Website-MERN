@@ -71,12 +71,84 @@
     background-color: red;
     color: white;
 }
+.nav_drop_down{
+    display: none;
+}
+/* 1280 px */
+@media(max-width: 1280px){
+    .navbar{
+        padding: 12px 50px;
+    }
+    .nav_logo img{
+        width: 40px;
+    }
+    .nav_logo p{
+        font-size: 26px;
+    }
+    .nav_menu{
+        gap: 30px;
+        font-size: 16px;
+    }
+    .nav_login_cart{
+        gap: 30px;
+    }
+    .nav_login_cart button{
+        width: 120px;
+        height: 45px;
+        font-size: 16px;
+    }
+    .nav_cart_count{
+        margin-left: -40px;
+        font-size: 12px;
+    }
+}
+/* 1024 px */
+@media(max-width: 1024px){
+    .navbar{
+        padding: 12px 30px;
+    }
+    .nav_menu{
+        gap: 25px;
+        font-size: 14px;
+    }
+    .nav_login_cart button{
+        width: 80px;
+        height: 35px;
+        font-size: 14px;
+    }
+    .nav_cart_count img{
+        width: 30px;
+    }
+    .nav_cart_count{
+        width: 18px;
+        height: 18px;
+    }
+}
+
 /* 800px */
 @media(max-width:800px){
     .navbar{
         padding: 10px 0px;
     }
     .nav_drop_down{
-        
+        display: block;
+        width: 30px;
+        rotate: -90deg;
+        transition: 0.5s;
+    }
+    .nav_menu{
+        display: flex;
+        height: 80px;
+        width: 100%;
+        position: absolute;
+        background-color: white;
+        justify-content: center;
+        top: 50px;
+    }
+    .nav_menu_visible{
+        display: display;
+    }
+    .nav_menu_visible{
+        display: flex;
     }
 }
