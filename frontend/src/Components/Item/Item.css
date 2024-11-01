@@ -1,31 +1,119 @@
-.item{
-    width: 300px;
+/* Base Styling */
+.items_container {
+    display: flex;               /* Enable flex layout for the container */
+    flex-wrap: wrap;            /* Allow items to wrap to the next line */
+    justify-content: center;     /* Center items horizontally */
+    padding: 20px;              /* Add padding around the container */
 }
-.item p{
-    margin: 6px 0px;
+
+.item {
+    flex: 1 1 280px;            /* Allow items to grow and shrink with a base width of 280px */
+    max-width: 300px;           /* Maximum width for the item */
+    margin: 10px;               /* Add margin around each item */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transition effects */
+    display: flex;              /* Enable flex layout for item */
+    flex-direction: column;     /* Stack child elements vertically */
+    background-color: #fff;     /* Set a background color */
+    border-radius: 8px;        /* Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    padding: 10px;              /* Add padding inside item */
 }
-.item_prices{
-    display: flex;
-    gap: 20px;
+
+.item img {
+    width: 100%;                /* Auto scales with item width */
+    height: auto;               /* Maintain aspect ratio */
+    object-fit: cover;          /* Cover the container */
+    border-radius: 8px;        /* Rounded corners for images */
+    max-height: 340px;          /* Restrict max height for better layout control */
 }
-.item_price_naw{
-    color: #374151;
-    font-size: 18px;
-    font-weight: 600;
+
+.item p {
+    margin: 8px 0;              /* Margin for paragraphs */
+    font-size: 16px;            /* Default font size */
+    color: #4B5563;             /* Subtle text color for readability */
 }
-.item_price_old{    
-    color: #8c8c8c;
-    font-size: 18px;
-    font-weight: 500;
+
+.item_prices {
+    display: flex;              /* Flex layout for price container */
+    gap: 10px;                  /* Space between prices */     
 }
-.item:hover{
-    transform: scale(1.05);
-    transition: 0.6s;
+
+.item_price_new {
+    color: #374151;             /* Dark color for new price */
+    font-size: 18px;            /* Default font size */
+    font-weight: 600;           /* Bold weight */
 }
-.item_image{
-    height: 340px;
-    width: 300px;
+
+.item_price_old {
+    color: #8C8C8C;             /* Gray color for old price */
+    font-size: 16px;            /* Default font size */
+    font-weight: 500;           /* Normal weight */
+    text-decoration: line-through; /* Visual cue for the old price */
 }
-.item .item_name{
-    font-size: 24px;
+
+/* Hover Effect */
+.item:hover {
+    transform: scale(1.05);     /* Slightly enlarge item on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1280px) {
+    .item {
+        flex: 1 1 220px;         /* Adjust base width for medium screens */
+    }
+    .item img {
+        max-height: 300px;       /* Adjust max height for images */
+    }
+    .item p {
+        font-size: 14px;         /* Adjust font size */
+    }
+    .item_price_new, .item_old_price {
+        font-size: 14px;         /* Adjust price font size */
+    }
+}
+
+@media (max-width: 1024px) {
+    .item {
+        flex: 1 1 180px;         /* Further reduce base width */
+    }
+    .item img {
+        max-height: 240px;       /* Adjust max height for images */
+    }
+    .item p {
+        font-size: 13px;         /* Adjust font size */
+    }
+    .item_price_new, .item_old_price {
+        font-size: 12px;         /* Adjust price font size */
+    }
+}
+
+@media (max-width: 800px) {
+    .item {
+        flex: 1 1 150px;         /* Minimum width for items */
+    }
+    .item img {
+        max-height: 200px;       /* Adjust max height for images */
+    }
+    .item p {
+        font-size: 12px;         /* Adjust font size */
+    }
+    .item_price_new, .item_old_price {
+        font-size: 10px;         /* Adjust price font size */
+    }
+}
+
+@media (max-width: 500px) {
+    .item {
+        flex: 1 1 140px;         /* Adjust base width */
+    }
+    .item img {
+        max-height: 180px;       /* Adjust max height for images */
+    }
+    .item p {
+        font-size: 11px;         /* Adjust font size */
+    }
+    .item_price_new, .item_old_price {
+        font-size: 5px;          /* Adjust price font size */
+    }
 }
