@@ -70,7 +70,7 @@
     gap: 15px;
     width: 220px;
     height: 40px;
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: #ff4141;
     color: white;
     font-size: 22px;
@@ -145,6 +145,9 @@
     .hero_left p {
         font-size: 26px;
     }
+    .hero_left h2 {
+        font-size: 20px;
+    }
 
     .hero_right img {
         width: 400px;
@@ -171,6 +174,9 @@
     .hero_left p {
         font-size: 22px;
     }
+    .hero_left h2 {
+        font-size: 14px;
+    }
 
     .hero_latest_btn {
         width: 180px;
@@ -180,12 +186,18 @@
 }
 
 @media (max-width: 480px) {
+    .hero{
+        margin-top: 38px;
+    }
     .hero_left p {
-        font-size: 20px;
+        font-size: 18px;
+    }
+    .hero_left h2{
+        font-size: 16px;
     }
 
-    .hero_right img {
-        width: 300px;
+    .hero_right{
+        display: none;
     }
 
     .hero_latest_btn {

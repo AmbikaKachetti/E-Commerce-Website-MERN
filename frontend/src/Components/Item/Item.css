@@ -3,20 +3,20 @@
     display: flex;               /* Enable flex layout for the container */
     flex-wrap: wrap;            /* Allow items to wrap to the next line */
     justify-content: center;     /* Center items horizontally */
-    padding: 20px;              /* Add padding around the container */
+    padding: 10px;              /* Add padding around the container */
 }
 
 .item {
     flex: 1 1 280px;            /* Allow items to grow and shrink with a base width of 280px */
     max-width: 300px;           /* Maximum width for the item */
-    margin: 10px;               /* Add margin around each item */
+    margin: 5px;               /* Add margin around each item */
     transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transition effects */
     display: flex;              /* Enable flex layout for item */
     flex-direction: column;     /* Stack child elements vertically */
     background-color: #fff;     /* Set a background color */
     border-radius: 8px;        /* Add rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-    padding: 10px;              /* Add padding inside item */
+    padding: 4px;              /* Add padding inside item */
 }
 
 .item img {
@@ -114,6 +114,6 @@
         font-size: 11px;         /* Adjust font size */
     }
     .item_price_new, .item_old_price {
-        font-size: 5px;          /* Adjust price font size */
+        font-size: 10px;          /* Adjust price font size */
     }
 }

@@ -21,9 +21,49 @@
 }
 
 .popular_item {
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
     justify-content: center; /* Center items in the container */
+}
+@media(max-width:1280px){
+    .popular{
+        height: 70vh;
+    }
+    .popular h1{
+        font-size: 20px;
+    }
+    .popular hr{
+        width: 160px;
+    }
+}
+@media(max-width:1024px){
+    .popular{
+        height: 60vh;
+    }
+    .popular h1{
+        font-size: 16px;
+    }
+    .popular hr{
+        width: 120px;
+    }
+    .popular_item{
+        gap: 2px;
+        padding: 0px;
+    }
+}
+@media(max-width: 800px){
+    .popular{
+        height: 50vh;
+    }
+    .popular h1{
+        font-size: 16px;
+    }
+    .popular hr{
+        width: 120px;
+    }
+}
+@media(max-width: 500px){
+    .popular{
+        
+    }
 }
