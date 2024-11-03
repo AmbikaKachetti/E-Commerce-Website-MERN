@@ -106,7 +106,6 @@
 
 .hero_right img {
     width: 500px;
-    max-width: 100%;
     transition: transform 0.5s ease;
 }
 
@@ -149,7 +148,8 @@
     }
 
     .hero_right img {
-        width: 400px;
+        width: 380px;
+        height: auto;
     }
 }
 
@@ -189,7 +189,7 @@
         margin-top: 38px;
     }
     .hero_left p {
-        font-size: 18px;
+        font-size: 16px;
     }
     .hero_left h2{
         font-size: 16px;
@@ -202,5 +202,6 @@
     .hero_latest_btn {
         width: 170px;
         height: 40px;
+        font-size: 14px;
     }
 }

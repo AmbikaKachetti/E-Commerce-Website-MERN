@@ -1,119 +1,107 @@
-/* Base Styling */
-.items_container {
-    display: flex;               /* Enable flex layout for the container */
-    flex-wrap: wrap;            /* Allow items to wrap to the next line */
-    justify-content: center;     /* Center items horizontally */
-    padding: 10px;              /* Add padding around the container */
+/* Container for the entire item */
+.item_container {
+    display: flex;
+    justify-content: center;          /* Center items horizontally */
+    flex-wrap: wrap;                  /* Allow items to wrap onto new lines */
+    gap: 16px;                        /* Space between items */
+    padding: 16px;                    /* Padding for the container */
+    box-sizing: border-box;           /* Include padding in width calculation */
+    overflow: hidden;                 /* Prevent overflow */
 }
 
+/* Base Styling for Item */
 .item {
-    flex: 1 1 280px;            /* Allow items to grow and shrink with a base width of 280px */
-    max-width: 300px;           /* Maximum width for the item */
-    margin: 5px;               /* Add margin around each item */
-    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transition effects */
-    display: flex;              /* Enable flex layout for item */
-    flex-direction: column;     /* Stack child elements vertically */
-    background-color: #fff;     /* Set a background color */
-    border-radius: 8px;        /* Add rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
-    padding: 4px;              /* Add padding inside item */
+    width: 100%;                      /* Full width within parent */
+    max-width: 300px;                 /* Set max width for larger screens */
+    transition: transform 0.6s ease;  /* Smooth scaling on hover */
+    display: flex;
+    flex-direction: column;           /* Stack elements vertically */
+    background-color: #ffffff;        /* White background */
+    border-radius: 10px;              /* Rounded corners */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;               /* Center-align text */
+    box-sizing: border-box;           /* Include padding in width */
 }
 
-.item img {
-    width: 100%;                /* Auto scales with item width */
-    height: auto;               /* Maintain aspect ratio */
-    object-fit: cover;          /* Cover the container */
-    border-radius: 8px;        /* Rounded corners for images */
-    max-height: 340px;          /* Restrict max height for better layout control */
+/* Image Styling */
+.item_image {
+    width: 100%;                      /* Scale image with item width */
+    height: auto;                     /* Maintain aspect ratio */
+    object-fit: cover;                /* Cover the image area */
+    border-radius: 10px;              /* Rounded corners for image */
+    max-height: 320px;                /* Limit max height */
+    cursor: pointer;                  /* Pointer cursor */
 }
 
-.item p {
-    margin: 8px 0;              /* Margin for paragraphs */
-    font-size: 16px;            /* Default font size */
-    color: #4B5563;             /* Subtle text color for readability */
+/* Item Name Styling */
+.item_name {
+    margin: 6px 0;                    /* Space for name text */
+    font-size: 16px;                  /* Default font size */
+    color: #4B5563;                   /* Darker text color */
+    font-weight: 600;                 /* Slightly bold for emphasis */
 }
 
+/* Price Container Styling */
 .item_prices {
-    display: flex;              /* Flex layout for price container */
-    gap: 10px;                  /* Space between prices */     
+    display: flex;
+    justify-content: center;          /* Center prices horizontally */
+    gap: 20px;                        /* Space between prices */
 }
 
+/* New Price Styling */
 .item_price_new {
-    color: #374151;             /* Dark color for new price */
-    font-size: 18px;            /* Default font size */
-    font-weight: 600;           /* Bold weight */
+    color: #374151;                   /* Dark color for new price */
+    font-size: 18px;
+    font-weight: 600;                 /* Bold weight for emphasis */
 }
 
-.item_price_old {
-    color: #8C8C8C;             /* Gray color for old price */
-    font-size: 16px;            /* Default font size */
-    font-weight: 500;           /* Normal weight */
-    text-decoration: line-through; /* Visual cue for the old price */
+/* Old Price Styling */
+.item_old_price {
+    color: #8C8C8C;                   /* Gray color for old price */
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: line-through;    /* Strikethrough for old price */
 }
 
 /* Hover Effect */
 .item:hover {
-    transform: scale(1.05);     /* Slightly enlarge item on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+    transform: scale(1.05);           /* Slightly enlarge on hover */
 }
 
 /* Responsive Adjustments */
 @media (max-width: 1280px) {
     .item {
-        flex: 1 1 220px;         /* Adjust base width for medium screens */
-    }
-    .item img {
-        max-height: 300px;       /* Adjust max height for images */
-    }
-    .item p {
-        font-size: 14px;         /* Adjust font size */
-    }
-    .item_price_new, .item_old_price {
-        font-size: 14px;         /* Adjust price font size */
+        max-width: 280px;             /* Adjust max width for large screens */
     }
 }
 
 @media (max-width: 1024px) {
     .item {
-        flex: 1 1 180px;         /* Further reduce base width */
+        max-width: 100%;              /* Allow items to adapt to container */
     }
-    .item img {
-        max-height: 240px;       /* Adjust max height for images */
-    }
-    .item p {
-        font-size: 13px;         /* Adjust font size */
-    }
-    .item_price_new, .item_old_price {
-        font-size: 12px;         /* Adjust price font size */
+    .item_container {
+        padding: 8px;                 /* Reduce padding */
     }
 }
 
 @media (max-width: 800px) {
     .item {
-        flex: 1 1 150px;         /* Minimum width for items */
+        max-width: 100%;              /* Full width for small screens */
     }
-    .item img {
-        max-height: 200px;       /* Adjust max height for images */
-    }
-    .item p {
-        font-size: 12px;         /* Adjust font size */
-    }
-    .item_price_new, .item_old_price {
-        font-size: 10px;         /* Adjust price font size */
+    .item_container {
+        padding: 4px;                 /* Further reduce padding */
     }
 }
 
 @media (max-width: 500px) {
     .item {
-        flex: 1 1 140px;         /* Adjust base width */
+        max-width: 100%;              /* Full width for extra small screens */
     }
-    .item img {
-        max-height: 180px;       /* Adjust max height for images */
+    .item_name {
+        font-size: 14px;              /* Smaller font size for item name */
     }
-    .item p {
-        font-size: 11px;         /* Adjust font size */
-    }
-    .item_price_new, .item_old_price {
-        font-size: 10px;          /* Adjust price font size */
+    .item_price_new, 
+    .item_old_price {
+        font-size: 14px;              /* Smaller font size for prices */
     }
 }
