@@ -5,15 +5,16 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    padding: 0px 140px;
+    padding: 20px 140px;
     margin-bottom: 150px;
-    background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
+    border-radius: 10px;
+    background: linear-gradient(180deg, #f7b8fc , #ffb8b8);
     gap: 30px;
 }
 
 .newsletter h1 {
     color: #454545;
-    font-size: 55px;
+    font-size: 40px;
     font-weight: 600;
 }
 
@@ -27,8 +28,8 @@
     align-items: center;
     justify-content: space-between;
     background: white;
-    width: 730px;
-    height: 70px;
+    width: 630px;
+    height: 50px;
     border-radius: 10px;
     border: 1px solid #e3e3e3;
 }
@@ -45,11 +46,13 @@
 
 .newsletter div button {
     width: 210px;
-    height: 70px;
+    height: 50px;
     border-radius: 10px;
     background: black;
     color: white;
     font-size: 16px;
+    border: none;
+    outline: none;
     cursor: pointer;
 }
 

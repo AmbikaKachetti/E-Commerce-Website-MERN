@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    font-family: sans-serif;
 }
 .footer_logo{
     display: flex;
@@ -12,15 +13,17 @@
 }
 .footer_logo p{
     color: #383838;
-    font-size: 46px;
+    font-size: 40px;
     font-weight: 700;
 }
 .footer_links{
     display: flex;
-    list-style: none;
-    gap: 50px;
-    color: #282828;
+    gap: 20px;
     font-size: 20px;
+    list-style: none;
+    color: #282828;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .footer_links li{
     cursor: pointer;
