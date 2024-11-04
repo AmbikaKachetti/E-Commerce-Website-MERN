@@ -2,7 +2,7 @@
 .navbar {
     display: flex;
     justify-content: space-around;
-    padding: 16px;
+    padding: 5px;
     box-shadow: 0 1px 3px -2px black;
     align-items: center;
     position: relative;
@@ -13,6 +13,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+.nav_logo img{
+    width: 120px;
+    height: 120px;
 }
 
 .nav_logo p {
@@ -162,6 +166,10 @@
         height: 18px;
         font-size: 10px;
     }
+    .nav_logo img{
+        height: 100px;
+        width: 100px;
+    }
 }
 
 /* Small screens */
@@ -205,6 +213,10 @@
     .nav_drop_down.open{
         transform: rotate(-4deg);
     }
+    .nav_logo img{
+        height: 80px;
+        width: 80px;
+    }
 }
 @media(max-width: 500px){
     .navbar{
@@ -220,5 +232,9 @@
     }
     .nav_login_cart{
         transform: scale(0.8);
+    }
+    .nav_logo img{
+        height: 70px;
+        width: 70px;
     }
 }

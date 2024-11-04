@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import './Navbar.css';
-import logo from '../../Assets/Frontend_Assets/logo.png';
+import logo from '../../Assets/Frontend_Assets/big_logo.png';
 import cart_icon from '../../Assets/Frontend_Assets/cart_icon.png';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../../Context/ShopContext';

@@ -16,6 +16,10 @@
     font-size: 40px;
     font-weight: 700;
 }
+.footer_logo img{
+    height: 120px;
+    width: 120px;
+}
 .footer_links{
     display: flex;
     gap: 20px;
@@ -66,9 +70,11 @@
         align-items: end;
     }
     .footer_logo img{
-        width: 40px;
+        height: 80px;
+        width: 80px;
     }
     .footer_logo p{
+        padding-bottom: 28px;
         font-size: 25px;
     }
     .footer_links{
