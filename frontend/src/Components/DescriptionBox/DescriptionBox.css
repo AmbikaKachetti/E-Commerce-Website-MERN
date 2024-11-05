@@ -27,3 +27,20 @@
     padding: 28px;
     padding-bottom: 40px;
 }
+@media(max-width: 1024px){
+    .descriptionbox{
+        margin: 0px 30px;
+    }
+    .descriptionbox_description{
+        font-size: 14px;
+    }
+}
+
+@media(max-width: 800px){
+    .descriptionbox{
+        margin: 30px;
+    }
+    .descriptionbox_description{
+        font-size: 12px;
+    }
+}

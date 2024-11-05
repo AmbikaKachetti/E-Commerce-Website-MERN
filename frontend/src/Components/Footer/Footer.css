@@ -61,6 +61,34 @@
     height: 3px;
     background: #c7c7c7;
 }
+@media(max-width: 1024px){
+    .footer{
+        gap: 20px;
+    }
+    .footer_logo{
+        gap: 10px;
+        align-items: end;
+    }
+    .footer_logo img{
+        height: 80px;
+        width: 80px;
+    }
+    .footer_logo p{
+        padding-bottom: 22px;
+        font-size: 25px;
+    }
+    .footer_links{
+        font-size: 14px;
+        gap: 10px;
+    }
+    .footer_socail_icons img{
+        width: 22px;
+    }
+    .footer_copyright{
+        font-size: 13px;
+    }
+}
+
 @media(max-width: 800px){
     .footer{
         gap: 20px;
