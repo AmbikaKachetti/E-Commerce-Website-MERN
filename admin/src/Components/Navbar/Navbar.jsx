@@ -1,7 +1,7 @@
 import React from 'react'
 import './Navbar.css'
-import navlogo from '../../assets/Admin_Assets/nav_logo.svg'
-import navprofile from '../../assets/Admin_Assets/navprofile.svg'
+import navlogo from '../../assets/Admin_Assets/nav-logo.svg'
+import navprofile from '../../assets/Admin_Assets/nav-profile.svg'
 
 const Navbar = () => {
     return (
@@ -11,5 +11,4 @@ const Navbar = () => {
         </div>
     )
 }
-
 export default Navbar
