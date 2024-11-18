@@ -8,8 +8,24 @@
     background: white;
 }
 .nav_logo{
-    width: 200px;
+    width: 100px;
 }
 .nav_profile{
     width: 75px;
+}
+.navbaricon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media(max-width: 800px){
+    .navbar{
+        padding: 15px 30px;
+    }
+    .nav_logo{
+        width: 90px;
+    }
+    .nav_profile{
+        width: 60px;
+    }
 }
