@@ -19,12 +19,28 @@ const AddProduct = () => {
     }
     const Add_Product = async ()=>{
         console.log(productDetails);
+        let responseData;
+        let product = productDetails;
+
+        let formData = new FormData();
+        formData.append('product', image);
+
+        await fetch('http://localhost:4000/upload',{
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+            },
+            body: formData,
+        }).then((resp) => resp.json()).then((data)=>{responseData=data})
+        if(responseData.success){
+            product.image = responseData.image_url;
+        }
     }
     return (
     <div className='add_product'>
         <div className="addproduct_item_field">
             <p>Product Title</p>
-            <input value = {productDetails.name} onChange={changeHandler} type="text" name='nmae' placeholder='Type here'/>
+            <input value = {productDetails.name} onChange={changeHandler} type="text" name='name' placeholder='Type here'/>
         </div>
         <div className='addproduct_price'>
             <div className='addproduct_item_field'>
