@@ -88,7 +88,7 @@ export default AddProduct
 
 // new code after rectifying the errors in the previous commented code above
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/Admin_Assets/upload_area.svg';
 

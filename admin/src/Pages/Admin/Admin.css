@@ -2,7 +2,7 @@
     display: flex;
 }
 @media(max-width: 800px){
-    .ADMIN{
+    .admin{
         flex-direction: column;
     }
 }
