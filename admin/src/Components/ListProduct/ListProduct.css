@@ -1,41 +1,82 @@
-.list_product{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.list_product {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 1200px; /* Limit to 1200px width */
+    margin: 0 auto; /* Center the container */
     width: 100%;
-    height: 740px;
-    padding: 10px 50px;
-    margin: 30px;
-    border-radius: 6px;
-    background: white;
 }
-.list_product_format_main{
+
+.list_product h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.list_product_format_main {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    width: 100%;
-    padding: 20px 0px;
-    color: #454545;
-    font-size: 15px;
-    font-weight: 600;
-}
-.list_product_format{
+    grid-template-columns: 1fr 2fr 1fr 1fr 2fr 1fr;
     align-items: center;
-    font-weight: 500;
+    gap: 10px;
+    padding: 10px;
+    text-align: center;
 }
-.listproduct_product_icon{
-    height: 80px;
+
+.list_product_all_products {
+    overflow-y: auto;
+    max-height: 600px; /* Adjust this as per your UI */
+    padding: 10px 0px 0px 20px;
 }
-.listproduct_remove_icon{
+
+.listproduct_product_icon {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.listproduct_remove_icon {
+    width: 16px;
+    height: 16px;
     cursor: pointer;
-    margin: auto;
+    padding-left: 40px;
 }
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+/* Media query for screens 1200px and above */
+@media (min-width: 1200px) {
+    .list_product {
+        max-width: 100%; /* Utilize full screen width */
+        padding: 0 20px; /* Add some side padding */
+    }
+
+    .list_product_format_main {
+        grid-template-columns: 1fr 3fr 1fr 1fr 2fr 1fr; /* Adjust for a wider screen */
+        gap: 20px; /* Increase spacing between items */
+    }
+}
+
+
 @media(max-width: 800px){
     .list_product{
         box-sizing: border-box;
         width: 95%;
         height: 100%;
         padding: 10px 30px;
-        margin: 20px;
+        margin: 20px auto;
+    }
+    .list_product_format_main{
+        padding: 15px 0px;
+        color: #454545;
+        font-size: 12px;
+    }
+    .listproduct_product_icon{
+        height: 60px;
+    }
+    .listproduct_remove_icon {
+        padding-left: 25px;
     }
 }
