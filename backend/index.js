@@ -107,33 +107,15 @@ app.post('/addproduct', async (req, res)=>{
 })
 
 // Creating API endpoint for creating new product
-// app.post('/removeproduct', async (req, res)=>{
-//     await Product.findOneAndDelete({id:req.body.id});
-//     console.log("Removed");
-//     res.json({
-//         succes: true,
-//         name: req.body.name
-//     })
-// })
-app.post('/removerproduct', async (req, res) => {
-    try {
-        const { id } = req.body;
-        if (!id) return res.status(400).send({ message: 'Product ID is required' });
 
-        // Assuming MongoDB, replace with your DB logic
-        const result = await ProductModel.deleteOne({ _id: id });
-
-        if (result.deletedCount === 0) {
-            return res.status(404).send({ message: 'Product not found' });
-        }
-
-        res.status(200).send({ message: 'Product removed successfully' });
-    } catch (error) {
-        console.error('Error removing product:', error.message);
-        res.status(500).send({ message: 'Internal Server Error' });
-    }
-});
-
+app.post('/removeproduct', async (req, res)=>{
+    await Product.findOneAndDelete({id:req.body.id});
+    console.log("Removed");
+    res.json({
+        succes: true,
+        name: req.body.name
+    })
+})
 
 // Creating API for getting all products
 app.get('/allproducts', async (req, res)=>{
