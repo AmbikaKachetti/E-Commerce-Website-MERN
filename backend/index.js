@@ -1,3 +1,4 @@
+
 const port = 4000;
 const express = require("express");
 const app = express();
@@ -14,8 +15,8 @@ app.use(cors());
 mongoose.connect(
     "mongodb+srv://katyayini:ecommerce@cluster0.enm9w.mongodb.net/ecommerce",
 )
-.then(() => console.log("MongoDB connected successfully"))
-.catch((error) => console.log("MongoDB connection error:", error));
+// .then(() => console.log("MongoDB connected successfully"))
+// .catch((error) => console.log("MongoDB connection error:", error));
 
 // API Creation
 app.get("/", (req, res) => {
@@ -43,10 +44,10 @@ app.post("/upload",upload.single('product'), (req, res)=> {
 
 // Schema for creating Products
 const Product = mongoose.model("Product", {
-    id:{
-        type: Number,
-        required: true,
-    },
+    // id:{
+    //     type: Number,
+    //     required: true,
+    // },
     name:{
         type: String,
         required: true,
@@ -130,7 +131,7 @@ app.listen(port, (error) => {
         console.log("Server Running on Port " + port);
     }
     else{
-        console.log("Error : " +error)
+        console.log("Error : " + error)
     }
 });
 
