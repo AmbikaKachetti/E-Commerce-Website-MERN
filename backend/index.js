@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     res.send("Express App is Running");
 });
 
-// Image Storage Engione - multer - congiguration
+// Image Storage Engione - multer - configuration -middleware
 const storage = multer.diskStorage({
     destination: './upload/images', 
     filename: (req, file, cb) => {
@@ -44,10 +44,11 @@ app.post("/upload",upload.single('product'), (req, res)=> {
 
 // Schema for creating Products
 const Product = mongoose.model("Product", {
-    // id:{
-    //     type: Number,
-    //     required: true,
-    // },
+    id:{
+        type: Number,
+        required: true,
+        unique: true,
+    },
     name:{
         type: String,
         required: true,
@@ -80,7 +81,7 @@ const Product = mongoose.model("Product", {
 
 // Creating API endpoint for creating new product
 app.post('/addproduct', async (req, res)=>{
-    let products = await Product.find({});
+    let products = await Product.find({}); // we will get all products in one array, and we can access that using this "products"
     let id;
     if(products.length > 0){
         let last_product_array = products.slice(-1);
@@ -106,6 +107,48 @@ app.post('/addproduct', async (req, res)=>{
         name: req.body.name,
     });
 })
+
+// app.post('/addproduct', async (req, res) => {
+//     try {
+//         // Fetch all products from the database
+//         let products = await Product.find({}); 
+        
+//         let id;
+        
+//         // If products exist, get the last product's id and increment it by 1
+//         if (products.length > 0) {
+//             let last_product = products[products.length - 1];  // Get the last product
+//             id = last_product.id + 1;  // Increment the id by 1
+//         } else {
+//             id = 1;  // If no products exist, start with id 1
+//         }
+
+//         // Create a new product with the calculated or assigned id
+//         const product = new Product({
+//             id: id,
+//             name: req.body.name,
+//             image: req.body.image,
+//             category: req.body.category,
+//             new_price: req.body.new_price,
+//             old_price: req.body.old_price,
+//         });
+
+//         // Save the product to the database
+//         await product.save();
+
+//         console.log("Product Saved:", product);
+        
+//         // Return the success response
+//         res.json({
+//             success: true,
+//             name: req.body.name,
+//             id: product.id,  // Return the id of the newly created product
+//         });
+//     } catch (error) {
+//         console.error("Error saving product:", error);
+//         res.status(500).json({ success: false, message: error.message });
+//     }
+// });
 
 // Creating API endpoint for creating new product
 
