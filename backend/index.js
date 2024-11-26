@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
 
 app.use(express.json());
 app.use(cors());
@@ -108,50 +109,6 @@ app.post('/addproduct', async (req, res)=>{
     });
 })
 
-// app.post('/addproduct', async (req, res) => {
-//     try {
-//         // Fetch all products from the database
-//         let products = await Product.find({}); 
-        
-//         let id;
-        
-//         // If products exist, get the last product's id and increment it by 1
-//         if (products.length > 0) {
-//             let last_product = products[products.length - 1];  // Get the last product
-//             id = last_product.id + 1;  // Increment the id by 1
-//         } else {
-//             id = 1;  // If no products exist, start with id 1
-//         }
-
-//         // Create a new product with the calculated or assigned id
-//         const product = new Product({
-//             id: id,
-//             name: req.body.name,
-//             image: req.body.image,
-//             category: req.body.category,
-//             new_price: req.body.new_price,
-//             old_price: req.body.old_price,
-//         });
-
-//         // Save the product to the database
-//         await product.save();
-
-//         console.log("Product Saved:", product);
-        
-//         // Return the success response
-//         res.json({
-//             success: true,
-//             name: req.body.name,
-//             id: product.id,  // Return the id of the newly created product
-//         });
-//     } catch (error) {
-//         console.error("Error saving product:", error);
-//         res.status(500).json({ success: false, message: error.message });
-//     }
-// });
-
-// Creating API endpoint for creating new product
-
 app.post('/removeproduct', async (req, res)=>{
     await Product.findOneAndDelete({id:req.body.id});
     console.log("Removed");
@@ -167,6 +124,145 @@ app.get('/allproducts', async (req, res)=>{
     console.log("All Products Fetched");
     res.send(products);
 })
+
+// Schema creating for user model
+const Users = mongoose.model('Users',{
+    name: {
+        type: String,
+    },
+    email:{
+        type: String,
+        unique: true,
+    },
+    password: {
+        type: String,
+    },
+    cartData:{
+        type: Object,
+    },
+    date:{
+        type: Date,
+        default: Date.now,
+    }
+})
+
+// Creating end point for registering the user
+app.post('/signup', async (req, res) => {
+    // to check email and password already existing or not ?
+    let check = await Users.findOne({email: req.body.email});
+    if(check){
+        return res.status(400).json({success: false, errors: "existing user found with same email address"})
+    }
+    // if no user found, we will creat one empty cart here
+    let cart = {};
+    for(let i = 0; i < 300; i++){
+        cart[i] = 0;
+    }
+    const user = new Users({
+        name: req.body.username,
+        email: req.body.email,
+        passwrod: req.body.password,
+        cartData: cart,
+    })
+    await user.save();
+
+    // jwt authentication
+    const data = {
+        user:{
+            id: user.id
+        }
+    }
+    const token = jwt.sign(data, 'secrete_ecom'); // salt - adding one layer
+    res.json({success: true,token})
+})
+
+// Creating endpoint for user login
+
+// bcrypt
+
+// app.post('/login', async (req, res) => {
+//     let user = await Users.findOne({ email: req.body.email });
+//     if (user) {
+//         const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+//         const passwordCompare = await bcrypt.compare(req.body.password, user.password);
+//         if (passwordCompare) {
+//             const data = {
+//                 user: {
+//                     id: user.id
+//                 }
+//             };
+//             const token = jwt.sign(data, 'secrete_ecom');
+//             res.json({ success: true, token });
+//         } else {
+//             res.json({ success: false, errors: "Wrong Password" });
+//         }
+//     } else {
+//         res.json({ success: false, errors: "Wrong Email ID" });
+//     }
+// });
+
+
+app.post('/login', async (req, res) => {
+    let user = await Users.findOne({email: req.body.email});
+    if(user){
+        const passwordCompare = req.body.password === user.password; // this kind of comraison of pwd is not recommended for production level applications
+        if(passwordCompare){
+            const data = {
+                user: {
+                    id: user.id
+                }
+            }
+            const token = jwt.sign(data, 'secrete_ecom');
+            res.json({success: true, token});
+        }
+        else{
+            res.json({success: false, errors: "Wrong Password"});
+        }
+    }
+    else{
+        res.json({success: false, errors: "Wrong Email ID"});
+    }
+})
+
+// with expiration time
+
+
+// const bcrypt = require('bcrypt'); // Import bcrypt for password comparison
+// const jwt = require('jsonwebtoken'); // Ensure you have jwt for generating tokens
+
+// app.post('/login', async (req, res) => {
+//     try {
+//         // Fetch the user by email from the database
+//         const user = await Users.findOne({ email: req.body.email });
+        
+//         if (!user) {
+//             return res.json({ success: false, errors: "Wrong Email ID" });
+//         }
+
+//         // Compare the plaintext password with the stored hashed password
+//         const passwordCompare = await bcrypt.compare(req.body.password, user.password);
+        
+//         if (!passwordCompare) {
+//             return res.json({ success: false, errors: "Wrong Password" });
+//         }
+
+//         // Create JWT payload and generate a token
+//         const data = {
+//             user: {
+//                 id: user.id
+//             }
+//         };
+//         const token = jwt.sign(data, 'secrete_ecom', { expiresIn: '1h' }); // Optional: Add an expiration time
+        
+//         // Respond with success and the token
+//         res.json({ success: true, token });
+//     } catch (err) {
+//         console.error("Error in /login route:", err);
+//         res.status(500).json({ success: false, errors: "Internal Server Error" });
+//     }
+// });
+
 
 // Server listen
 app.listen(port, (error) => {
