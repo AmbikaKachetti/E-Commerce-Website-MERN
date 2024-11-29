@@ -206,7 +206,7 @@ app.post('/signup', async (req, res) => {
 app.post('/login', async (req, res) => {
     let user = await Users.findOne({email: req.body.email});
     if(user){
-        const passwordCompare = req.body.password === user.password; // this kind of comraison of pwd is not recommended for production level applications
+        const passwordCompare = req.body.password === user.password; // this kind of compraison of pwd is not recommended for production level applications
         if(passwordCompare){
             const data = {
                 user: {
