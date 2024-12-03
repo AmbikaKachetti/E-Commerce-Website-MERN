@@ -3,16 +3,16 @@ const port = 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
+// const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
 
 app.use(express.json());
 app.use(cors());
 
-// Database connection with MongoDB
+// Database connection with MongoDB || initialized the DB using mngoose connect
 mongoose.connect(
     "mongodb+srv://katyayini:ecommerce@cluster0.enm9w.mongodb.net/ecommerce",
 )
@@ -109,6 +109,7 @@ app.post('/addproduct', async (req, res)=>{
     });
 })
 
+// Creating API for deleting Products
 app.post('/removeproduct', async (req, res)=>{
     await Product.findOneAndDelete({id:req.body.id});
     console.log("Removed");
@@ -118,7 +119,7 @@ app.post('/removeproduct', async (req, res)=>{
     })
 })
 
-// Creating API for getting all products
+// Creating API for getting all Products
 app.get('/allproducts', async (req, res)=>{
     let products = await Product.find({});
     console.log("All Products Fetched");
@@ -178,31 +179,6 @@ app.post('/signup', async (req, res) => {
 
 // Creating endpoint for user login
 
-// bcrypt
-
-// app.post('/login', async (req, res) => {
-//     let user = await Users.findOne({ email: req.body.email });
-//     if (user) {
-//         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-//         const passwordCompare = await bcrypt.compare(req.body.password, user.password);
-//         if (passwordCompare) {
-//             const data = {
-//                 user: {
-//                     id: user.id
-//                 }
-//             };
-//             const token = jwt.sign(data, 'secrete_ecom');
-//             res.json({ success: true, token });
-//         } else {
-//             res.json({ success: false, errors: "Wrong Password" });
-//         }
-//     } else {
-//         res.json({ success: false, errors: "Wrong Email ID" });
-//     }
-// });
-
-
 app.post('/login', async (req, res) => {
     let user = await Users.findOne({email: req.body.email});
     if(user){
@@ -224,45 +200,6 @@ app.post('/login', async (req, res) => {
         res.json({success: false, errors: "Wrong Email ID"});
     }
 })
-
-// with expiration time
-
-
-// const bcrypt = require('bcrypt'); // Import bcrypt for password comparison
-// const jwt = require('jsonwebtoken'); // Ensure you have jwt for generating tokens
-
-// app.post('/login', async (req, res) => {
-//     try {
-//         // Fetch the user by email from the database
-//         const user = await Users.findOne({ email: req.body.email });
-        
-//         if (!user) {
-//             return res.json({ success: false, errors: "Wrong Email ID" });
-//         }
-
-//         // Compare the plaintext password with the stored hashed password
-//         const passwordCompare = await bcrypt.compare(req.body.password, user.password);
-        
-//         if (!passwordCompare) {
-//             return res.json({ success: false, errors: "Wrong Password" });
-//         }
-
-//         // Create JWT payload and generate a token
-//         const data = {
-//             user: {
-//                 id: user.id
-//             }
-//         };
-//         const token = jwt.sign(data, 'secrete_ecom', { expiresIn: '1h' }); // Optional: Add an expiration time
-        
-//         // Respond with success and the token
-//         res.json({ success: true, token });
-//     } catch (err) {
-//         console.error("Error in /login route:", err);
-//         res.status(500).json({ success: false, errors: "Internal Server Error" });
-//     }
-// });
-
 
 // Server listen
 app.listen(port, (error) => {
