@@ -3,11 +3,11 @@ const port = 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-// const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
+const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
 
 app.use(express.json());
 app.use(cors());
@@ -45,11 +45,11 @@ app.post("/upload",upload.single('product'), (req, res)=> {
 
 // Schema for creating Products
 const Product = mongoose.model("Product", {
-    id:{
-        type: Number,
-        required: true,
-        unique: true,
-    },
+    // id:{
+    //     type: Number,
+    //     required: true,
+    //     unique: true,
+    // },
     name:{
         type: String,
         required: true,
@@ -148,9 +148,10 @@ const Users = mongoose.model('Users',{
 })
 
 // Creating end point for registering the user
+/*
 app.post('/signup', async (req, res) => {
     // to check email and password already existing or not ?
-    let check = await Users.findOne({email: req.body.email});
+    let check = await Users.findOne({email:req.body.email});
     if(check){
         return res.status(400).json({success: false, errors: "existing user found with same email address"})
     }
@@ -173,12 +174,55 @@ app.post('/signup', async (req, res) => {
             id: user.id
         }
     }
-    const token = jwt.sign(data, 'secrete_ecom'); // salt - adding one layer
+    const token = jwt.sign(data, 'secrete_ecom'); // salt - adding one layer by this our data will encrypted by one layer
     res.json({success: true,token})
 })
+    */
+app.post('/signup', async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        // Check if the user already exists
+        const existingUser = await Users.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ success: false, errors: "User with this email address already exists" });
+        }
+
+        // Initialize cart data (optional logic)
+        let cart = {};
+        for (let i = 0; i < 300; i++) {
+            cart[i] = 0;
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user
+        const user = new Users({
+            name: username,
+            email,
+            password: hashedPassword,
+            cartData: cart,
+        });
+        await user.save();
+
+        // Generate JWT token
+        const data = {
+            user: {
+                id: user.id,
+            },
+        };
+        const token = jwt.sign(data, 'secrete_ecom', { expiresIn: '1h' }); // Token expires in 1 hour
+
+        res.status(201).json({ success: true, token });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ success: false, errors: "Internal Server Error" });
+    }
+});
 
 // Creating endpoint for user login
-
+/*
 app.post('/login', async (req, res) => {
     let user = await Users.findOne({email: req.body.email});
     if(user){
@@ -200,6 +244,40 @@ app.post('/login', async (req, res) => {
         res.json({success: false, errors: "Wrong Email ID"});
     }
 })
+*/
+
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Find user by email
+        const user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ success: false, errors: "Wrong Email ID" });
+        }
+
+        // Compare provided password with the hashed password in the database
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (!isPasswordMatch) {
+            return res.status(400).json({ success: false, errors: "Wrong Password" });
+        }
+
+        // Generate JWT token
+        const data = {
+            user: {
+                id: user.id,
+                name: user.name, // Include user name if needed
+                email: user.email, // Include user email if needed
+            },
+        };
+        const token = jwt.sign(data, 'secrete_ecom', { expiresIn: '1h' }); // Token expires in 1 hour
+
+        res.json({ success: true, token });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ success: false, errors: "Internal Server Error" });
+    }
+});
 
 // Server listen
 app.listen(port, (error) => {
