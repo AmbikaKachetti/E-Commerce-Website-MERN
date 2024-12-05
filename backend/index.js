@@ -45,11 +45,13 @@ app.post("/upload",upload.single('product'), (req, res)=> {
 
 // Schema for creating Products
 const Product = mongoose.model("Product", {
-    // id:{
-    //     type: Number,
-    //     required: true,
-    //     unique: true,
-    // },
+    
+    id:{
+        type: Number,
+        required: true,
+        unique: true,
+    },
+    
     name:{
         type: String,
         required: true,
@@ -93,7 +95,8 @@ app.post('/addproduct', async (req, res)=>{
         id: 1;
     }
     const product = new Product({
-        id: id,
+        // id: id,
+        id: Date.now(), // Setting a unique id based on the current timestamp
         name: req.body.name,
         image: req.body.image,
         category: req.body.category,
