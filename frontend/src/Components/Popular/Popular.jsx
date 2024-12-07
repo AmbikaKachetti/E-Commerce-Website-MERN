@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Popular.css'
-import data_product from '../../Assets/Frontend_Assets/data'
+// import data_product from '../../Assets/Frontend_Assets/data' // thi import is removed because we are getting data from api end point that is "/popularinwomen"
 import Item from '../Item/Item'
 
 const Popular = () => {
+    const [popularProducts, setPopular_Products] = useState([]);
+    
+    useEffect(()=>{
+        fetch('http://localhost:4000/popularinwomen')
+        .then((response)=>response.json())
+        .then((data)=>setPopular_Products(data));
+    }, [])
+
     return (
     <div className='popular'>
         <h1>POPULAR IN WOMEN</h1>
         <hr />
         <div className="popular_item">
             {
-                data_product.map((item,i)=>{
+                // data_product.map((item,i)=>{
+                popularProducts.map((item,i)=>{
                     return <Item 
                             key={i} 
                             id={item.id}

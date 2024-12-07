@@ -16,8 +16,8 @@ app.use(cors());
 mongoose.connect(
     "mongodb+srv://katyayini:ecommerce@cluster0.enm9w.mongodb.net/ecommerce",
 )
-// .then(() => console.log("MongoDB connected successfully"))
-// .catch((error) => console.log("MongoDB connection error:", error));
+.then(() => console.log("MongoDB connected successfully"))
+.catch((error) => console.log("MongoDB connection error:", error));
 
 // API Creation
 app.get("/", (req, res) => {
@@ -60,6 +60,10 @@ const Product = mongoose.model("Product", {
         type: String,
         required: true,
     },
+    // sizes: {
+    //     type: [String], // Example: ["S", "M", "L", "XL"]
+    //     default: [],
+    // },
     category:{
         type: String,
         required: true,
@@ -102,6 +106,7 @@ app.post('/addproduct', async (req, res)=>{
         category: req.body.category,
         new_price: req.body.new_price,
         old_price: req.body.old_price,
+        // sizes: req.body.sizes, // Accept sizes from the request
     });
     console.log(product);
     await product.save();
@@ -288,6 +293,19 @@ app.get('/newcollections', async (req, res)=>{
     let newcololection = products.slice(1).slice(-8); // we will get recently added 8 products
     console.log("NewCollection Fetched");
     res.send(newcololection);
+})
+
+// Creating endpoint for popular in women section
+app.get('/popularinwomen', async (req, res)=>{
+    let products = await Product.find({category:"women"});
+    let popular_in_women = products.slice(0, 4);
+    console.log("Popular in women fetched");
+    res.send(popular_in_women);
+})
+
+// Creating endpoint for adding products in cartdata
+app.post('/addtocart', async (req, res)=> {
+    console.log(req.body);
 })
 
 

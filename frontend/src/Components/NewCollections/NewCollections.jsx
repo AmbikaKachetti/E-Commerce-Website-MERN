@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './NewCollections.css'
-import new_collections from '../../Assets/Frontend_Assets/new_collections'
+// import new_collections from '../../Assets/Frontend_Assets/new_collections'
 import Item from '../Item/Item'
 
 const NewCollections = () => {
+    const [new_collections, setNew_Collection] = useState([]);
+
+    useEffect(()=>{
+        fetch('http://localhost:4000/newcollections')
+        .then((response)=>response.json())
+        .then((data)=>setNew_Collection(data));
+    },[])
+    // here, [] means, useEffect will be executed only once
+
     return (
         <div className='new_collections'>
             <h1>NEW COLLECTIONS</h1>
