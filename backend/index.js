@@ -1,5 +1,5 @@
 
-const port = 4000;
+// const port = 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -9,6 +9,8 @@ const path = require("path");
 const cors = require("cors");
 const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
 const { next } = require("process");
+
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cors());
