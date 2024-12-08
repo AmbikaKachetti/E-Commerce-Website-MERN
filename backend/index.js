@@ -8,7 +8,7 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
-const { nextTick } = require("process");
+const { next } = require("process");
 
 app.use(express.json());
 app.use(cors());
@@ -88,7 +88,7 @@ const Product = mongoose.model("Product", {
 })
 
 // Creating API endpoint for creating new product
-// 1
+// 1 here id storing as timestamp
 // app.post('/addproduct', async (req, res)=>{
 //     let products = await Product.find({}); // we will get all products in one array, and we can access that using this "products"
 //     let id;
@@ -98,7 +98,7 @@ const Product = mongoose.model("Product", {
 //         id = last_product.id+1;
 //     }
 //     else{
-//         id: 1;
+//         id= 1;
 //     }
 //     const product = new Product({
 //         // id: id,
@@ -119,7 +119,7 @@ const Product = mongoose.model("Product", {
 //     });
 // })
 
-// 2
+// 2 here id is storing as continuos number to the previous one
 app.post('/addproduct', async (req, res) => {
     try {
         // Fetch all products, sorted by `id` in descending order
