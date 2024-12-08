@@ -222,6 +222,18 @@ const ShopContextProvider = (props) => {
             })
             .then((data) => setAll_Product(data))
             .catch((error) => console.error('Failed to fetch products:', error));
+            if(localStorage.getItem('auth-token')){
+                fetch('hhtp://localhost:4000/getcart',{
+                    method: 'POST',
+                    headers: {
+                        Accpt: 'application/form-data',
+                        'auth-token': `${localStorage.getItem('auth-token')}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: "",
+                }).then((response)=>response.json())
+                .then((data)=>setCartItems(data));
+            }
     }, []);
 
     useEffect(() => {
@@ -266,11 +278,11 @@ const ShopContextProvider = (props) => {
                     'auth-token': localStorage.getItem('auth-token'),
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ itemId }),
+                body: JSON.stringify({ "itemId": itemId }),
             })
-                .then((response) => response.json())
-                .then((data) => console.log(data))
-                .catch((error) => console.error('Failed to add to cart:', error));
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.error('Failed to add to cart:', error));
         }
     };
     
@@ -278,6 +290,20 @@ const ShopContextProvider = (props) => {
     // Remove from cart
     const removeFromCart = (itemId) => {
         setCartItems((prev) => ({ ...prev, [itemId]: Math.max(prev[itemId] - 1, 0) }));
+        if(localStorage.getitem('auth-token')){
+            fetch('http://localhost:4000/removefromcart', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/form-data',
+                    'auth-token': localStorage.getItem('auth-token'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "itemId": itemId }),
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.error('Failed to remove from cart:', error));
+        }
     };
 
     // Calculate total cart amount

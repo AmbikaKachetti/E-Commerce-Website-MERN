@@ -8,6 +8,7 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const bcrypt = require('bcrypt'); // bcrypt is a widely-used library for hashing passwords securely.
+const { nextTick } = require("process");
 
 app.use(express.json());
 app.use(cors());
@@ -87,35 +88,72 @@ const Product = mongoose.model("Product", {
 })
 
 // Creating API endpoint for creating new product
-app.post('/addproduct', async (req, res)=>{
-    let products = await Product.find({}); // we will get all products in one array, and we can access that using this "products"
-    let id;
-    if(products.length > 0){
-        let last_product_array = products.slice(-1);
-        let last_product = last_product_array[0];
-        id = last_product.id+1;
+// 1
+// app.post('/addproduct', async (req, res)=>{
+//     let products = await Product.find({}); // we will get all products in one array, and we can access that using this "products"
+//     let id;
+//     if(products.length > 0){
+//         let last_product_array = products.slice(-1);
+//         let last_product = last_product_array[0];
+//         id = last_product.id+1;
+//     }
+//     else{
+//         id: 1;
+//     }
+//     const product = new Product({
+//         // id: id,
+//         id: Date.now(), // Setting a unique id based on the current timestamp
+//         name: req.body.name,
+//         image: req.body.image,
+//         category: req.body.category,
+//         new_price: req.body.new_price,
+//         old_price: req.body.old_price,
+//         // sizes: req.body.sizes, // Accept sizes from the request
+//     });
+//     console.log(product);
+//     await product.save();
+//     console.log("Saved");
+//     res.json({
+//         success: true,
+//         name: req.body.name,
+//     });
+// })
+
+// 2
+app.post('/addproduct', async (req, res) => {
+    try {
+        // Fetch all products, sorted by `id` in descending order
+        let lastProduct = await Product.findOne().sort({ id: -1 });
+
+        // Determine the new product id
+        let id = lastProduct ? lastProduct.id + 1 : 1;
+
+        // Create a new product with the auto-incremented id
+        const product = new Product({
+            id: id, // Use auto-incremented id
+            name: req.body.name,
+            image: req.body.image,
+            category: req.body.category,
+            new_price: req.body.new_price,
+            old_price: req.body.old_price,
+        });
+
+        // Save the product to the database
+        await product.save();
+
+        console.log("Product Saved:", product);
+
+        // Send response back to the client
+        res.json({
+            success: true,
+            product,
+        });
+    } catch (error) {
+        console.error("Error saving product:", error);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
     }
-    else{
-        id: 1;
-    }
-    const product = new Product({
-        // id: id,
-        id: Date.now(), // Setting a unique id based on the current timestamp
-        name: req.body.name,
-        image: req.body.image,
-        category: req.body.category,
-        new_price: req.body.new_price,
-        old_price: req.body.old_price,
-        // sizes: req.body.sizes, // Accept sizes from the request
-    });
-    console.log(product);
-    await product.save();
-    console.log("Saved");
-    res.json({
-        success: true,
-        name: req.body.name,
-    });
-})
+});
+
 
 // Creating API for deleting Products
 app.post('/removeproduct', async (req, res)=>{
@@ -303,11 +341,53 @@ app.get('/popularinwomen', async (req, res)=>{
     res.send(popular_in_women);
 })
 
+// Creating middleware to fetch user
+const fetchUser = async (req, res)=> {
+    const token = req.header('auth-token');
+    if(!token){
+        res.status(401).send({errors: "Please authenticate using valid token"});
+    }
+    else{
+        try{
+            const data = jwt.verify(token, 'secret-ecom');
+            req.user = data.user;
+            next();
+        }
+        catch(error){
+            res.status(401).send({errors:"Please authenticate using a valid token"});
+        }
+    }
+}
+
 // Creating endpoint for adding products in cartdata
-app.post('/addtocart', async (req, res)=> {
-    console.log(req.body);
+// 1 
+app.post('/addtocart', fetchUser, async (req, res)=> {
+    console.log("Added", req.body.itemId);
+    // console.log(req.body, req.user);
+    let userData = await Users.findOne({_id: req.user.id});
+    userData.cartData[req.body.itemId] += 1;
+    await Users.findOneAndUpdate({_id: req.user.id}, {cartData: userData.cartData});
+    res.send("Added");
 })
 
+
+// Creating end point to remove product from cartdata
+// 1
+app.post('/removefromcart', fetchUser, async (req, res)=>{
+    console.log("removed", req.body.itemId);
+    let userData = await Users.findOne({_id: req.user.id});
+    if(userData.cartData[rea.body.itemId]>0)
+    userData.cartData[req.body.itemId] -= 1;
+    await Users.findOneAndUpdate({_id: req.user.id}, {cartData: userData.cartData});
+    res.send("Removed");
+})
+
+//creating endpoint to get cartdata
+app.post('/getcart', fetchUser, async(req, res)=>{
+    console.log("GetCart");
+    let userData = await Users.findOne({_id: req.user.id});
+    res.json(userData.cartData);
+})
 
 // Server listen
 app.listen(port, (error) => {
