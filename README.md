@@ -1,4 +1,4 @@
-### WearBY E-Commerce Application
+### MERN FULL STACK E-Commerce Application
 I built this web application using the MERN stack (MongoDB, Express.js, React.js, and Node.js)
 
 ## Features
